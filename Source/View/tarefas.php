@@ -130,9 +130,9 @@
             </div>
         </div>
         <div class="d-flex mb-2">
-            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button" aria-expanded="false" aria-controls="inputs">Filtros disponíveis</a>
+            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
             <hr class="d-inline-flex w-100">
-            <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/tarefas" role="button">Limpar</a></div> <!-- Se não houver algum campo preenchido mudar botão para abrir lista de filtros -->
+            <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/tarefas" role="button">Limpar</a></div>
         </div>
     </form>
     <?php endif; ?>
@@ -187,6 +187,6 @@
     </div>
     <script src="js/sort-table.js"></script>
     <?php else: ?>
-    <div class="alert alert-danger mt-3" role="alert">Nenhuma tarefa encontrada.</div>
+    <div class="alert alert-secondary mt-3" role="alert">Nenhuma tarefa encontrada.</div>
     <?php endif; ?>
 </section>

@@ -13,7 +13,7 @@
     <header class="bg-dark text-white">
         <nav class="container px-2 navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand fw-bold" href="/">SRP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">

@@ -31,16 +31,16 @@
         </div>
     </form>
 </section>
-<?php if (isset($projects)): ?>
 <section class="mb-3">
     <h2>Lista de Projetos</h2>
+    <?php if (isset($projects) || isset($validKeys)): ?>
     <form method="GET" class="mt-3 text-start text-sm-end">
-        <div class="collapse <?= $_GET['situation'] || $_GET['description'] || $_GET['notes'] ? "show" : "" ; ?>" id="inputs">
+        <div class="collapse <?= isset($validKeys) ? "show" : "" ; ?>" id="inputs">
             <div class="row mb-sm-3">
                 <label class="col-xl-2 col-md-3 col-sm-4 pe-sm-1 pt-0 pt-sm-2 col-form-label" for="situation">Situação:</label>
                 <div class="col-xl-10 col-md-9 col-sm-8 ps-sm-1">
                     <select class="form-select" name="situation" id="situation">
-                        <option <?= $_GET['situation'] ? "" : "selected" ; ?>></option>
+                        <option></option>
                         <option value="Cancelado" <?= isset($_GET['situation']) && $_GET['situation'] == "Cancelado" ? "selected" : "" ; ?>>Cancelado</option>
                         <option value="Concluído" <?= isset($_GET['situation']) && $_GET['situation'] == "Concluído" ? "selected" : "" ; ?>>Concluído</option>
                         <option value="Em análise" <?= isset($_GET['situation']) && $_GET['situation'] == "Em análise" ? "selected" : "" ; ?>>Em análise</option>
@@ -64,11 +64,13 @@
             </div>
         </div>
         <div class="d-flex mb-2">
-            <a class="filter me-3 <?= $_GET['situation'] || $_GET['description'] || $_GET['notes'] ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button" aria-expanded="false" aria-controls="inputs">Filtros disponíveis</a>
+            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
             <hr class="d-inline-flex w-100">
             <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/projetos" role="button">Limpar</a></div>
         </div>
     </form>
+    <?php endif; ?>
+    <?php if (isset($projects)): ?>
     <table class="d-none d-md-table table table-striped" id="table">
         <thead>
             <tr>
@@ -110,6 +112,8 @@
         </div>
         <?php endforeach; ?>
     </div>
+    <script src="js/sort-table.js"></script>
+    <?php else: ?>
+    <div class="alert alert-secondary mt-3" role="alert">Nenhum projeto encontrado.</div>
+    <?php endif; ?>
 </section>
-<script src="js/sort-table.js"></script>
-<?php endif; ?>

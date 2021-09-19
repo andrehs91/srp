@@ -12,7 +12,9 @@ if (count($_POST)) {
     $projectDAO->create($newProject);
     header('Location: /projetos');
 } elseif (count($_GET)) {
-    $projects = $projectDAO->filter($_GET);
+    $validKeys = keysValidate($_GET, ["name", "description", "situation", "notes"]);
+    if ($validKeys) $projects = $projectDAO->filter($_GET, $validKeys);
+    else $projects = $projectDAO->readAll();
 } else {
     $projects = $projectDAO->readAll();
 }
