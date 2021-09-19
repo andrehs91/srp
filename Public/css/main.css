@@ -98,3 +98,23 @@ body {
         width: 12.25rem;
     }
 }
+
+@media print {
+    @page {size: landscape}
+    header,
+    footer,
+    .donotprint {
+        display: none;
+    }
+    #donotprint-th {
+        display: none;
+    }
+    .container,
+    .printarea {
+        display: block;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+    #table { overflow: hidden }
+ }

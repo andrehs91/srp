@@ -63,8 +63,9 @@ class Task
         return $this->end->format("H:i");
     }
     
-    public function getDiffTime(): string // Em minutos
+    public function getDiffTime(): int // Em minutos
     {
+        if ($this->start > $this->end) return 0;
         $diff = $this->start->diff($this->end);
         return $diff->h * 60 + $diff->i;
     }

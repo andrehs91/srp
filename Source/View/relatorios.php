@@ -1,24 +1,36 @@
-<h1 class="text-center mb-3">Relatórios</h1>
-<section class="mb-3">
+<h1 class="text-center mb-3 donotprint">Relatórios</h1>
+<section class="mb-3 donotprint">
     <form method="GET" class="mt-3">
-        <div class="d-block d-md-flex mb-3 text-center">
-            <div class="input-group flex-wrap">
-                <label class="input-group-text text-nowrap" for="project-id">Escolha um Projeto: </label>
-                <select class="form-select" name="project-id" id="project-id" required>
-                    <option selected></option>
-                    <?php foreach ($projects as $projectId => $projectName): ?>
-                    <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
-                    <?php endforeach; ?>
-                </select>
+        <div class="row g-3 mb-3">
+            <div class="col col-12 col-sm-4">
+                <p class="mb-0">Escolha um projeto para gerar o relatório.</p>
+                <p class="mb-0">Se desejar calcular o custo do projeto, informe o valor da hora trabalhada.</p>
             </div>
-            <button type="submit" class="btn btn-primary text-nowrap mt-3 mt-md-0 mx-2 me-md-0 ms-md-3">Gerar Relatório</button><a class="btn btn-secondary text-nowrap mt-3 mt-md-0 mx-2 me-md-0 ms-md-3" href='/relatorios'>Limpar</a>
+            <div class="col col-12 col-sm-8 mt-0 mx-0 px-0 row g-3">
+                <div class="col col-12 input-group">
+                    <label class="input-group-text text-nowrap" for="project_id">Projeto: </label>
+                    <select class="form-select" name="project_id" id="project_id" required>
+                        <option selected></option>
+                        <?php foreach ($projects as $projectId => $projectName): ?>
+                        <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col col-12 input-group">
+                    <label class="input-group-text text-nowrap" for="hourly_rate">Hora trabalhada (R$): </label>
+                    <input type="text" class="form-control" name="hourly_rate" id="hourly_rate">
+                </div>
+                <div class="col col-12 text-center">
+                    <button type="submit" class="btn btn-primary text-nowrap me-2">Gerar Relatório</button><a class="btn btn-secondary text-nowrap ms-2" href='/relatorios'>Limpar</a>
+                </div>
+            </div>
         </div>
     </form>
 </section>
 <?php if (isset($report)): ?>
-<section class="mb-3">
+<section class="mb-3 printarea">
     <h2>Relatório do Projeto</h2>
-    <p class="mb-0"><Strong>Nome: </Strong><?= $report->project->getName(); ?></p>
+    <p class="mb-0"><Strong>Nome do Projeto: </Strong><?= $report->project->getName(); ?></p>
     <p class="mb-0"><Strong>Descrição: </Strong><?= $report->project->getDescription(); ?></p>
     <p class="mb-0"><Strong>Situação: </Strong><?= $report->project->getSituation(); ?></p>
     <p class="mb-0"><Strong>Observações: </Strong><?= $report->project->getNotes(); ?></p>
@@ -32,10 +44,10 @@
         }
     ?>
     <p class="mb-0"><Strong>Tempo despendido: </Strong><?= $tempo ?? "0" ; ?> min</p>
-    <p class="mb-0"><Strong>Custo em BRL: </Strong>R$ 0,00</p>
-    <p class="mb-0"><Strong>Custo em USD: </Strong>$0.00</p>
-    <p><Strong>Custo em EUR: </Strong>0,00 &#8364;</p>
-    <?php if (isset($report->tasks)): ?> // Corrigir
+    <?php if ($tempo && $report->hourlyRate): ?>
+    <p><Strong>Custo Total: </Strong>R$ <?= number_format($tempo * $report->hourlyRate / 60, 2, ",", ".") ?></p>
+    <?php endif; ?>
+    <?php if ($report->tasks): ?>
     <h3>Tarefas Executadas</h3>
     <div class="overflow-auto">
         <table class="d-table table table-striped" id="table">
@@ -47,21 +59,27 @@
                     <th scope="col" onclick="sortTable(3)" style="cursor:pointer" class="text-center">Data&uarr;&darr;</th>
                     <th scope="col" onclick="sortTable(4)" style="cursor:pointer" class="text-center">Hora do Início&uarr;&darr;</th>
                     <th scope="col" onclick="sortTable(5)" style="cursor:pointer" class="text-center">Hora do Fim&uarr;&darr;</th>
-                    <th scope="col" onclick="sortTable(6)" style="cursor:pointer" class="text-center">Duração&uarr;&darr;</th>
-                    <th scope="col">Fatura</th>
+                    <th scope="col" class="text-center">Duração</th>
+                    <?php if ($tempo && $report->hourlyRate): ?>
+                    <th scope="col" class="text-center">Custo</th>
+                    <?php endif; ?>
+                    <th scope="col" id="donotprint-th">Fatura</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($report->tasks as $task): ?>
                 <tr>
                     <td class="align-middle"><?= $task->getDescription(); ?></td>
-                    <td class="align-middle"><?= $task->getSituation(); ?></td>
+                    <td class="align-middle text-nowrap"><?= $task->getSituation(); ?></td>
                     <td class="align-middle"><?= $task->getNotes(); ?></td>
-                    <td class="align-middle text-center"><?= $task->getDate("d/m/Y"); ?></td>
-                    <td class="align-middle text-center"><?= $task->getStartTime(); ?></td>
-                    <td class="align-middle text-center"><?= $task->getEndTime(); ?></td>
-                    <td class="align-middle text-center"><?= $task->getDiffTime(); ?> min</td>
-                    <td>
+                    <td class="align-middle text-center text-nowrap"><?= $task->getDate("d/m/Y"); ?></td>
+                    <td class="align-middle text-center text-nowrap"><?= $task->getStartTime(); ?></td>
+                    <td class="align-middle text-center text-nowrap"><?= $task->getEndTime(); ?></td>
+                    <td class="align-middle text-center text-nowrap"><?= $task->getDiffTime(); ?> min</td>
+                    <?php if ($tempo && $report->hourlyRate): ?>
+                    <td class="align-middle text-center text-nowrap">R$ <?= number_format($task->getDiffTime() * $report->hourlyRate / 60, 2, ",", ".") ?></td>
+                    <?php endif; ?>
+                    <td class="align-middle text-center text-nowrap donotprint">
                         <a href="#" class="text-danger"><svg class="icon">
                             <use xlink:href="img/icons.svg#report-pdf"></use>
                         </svg></a>
@@ -74,7 +92,7 @@
             </tbody>
         </table>
     </div>
+    <script src="js/sort-table.js"></script>
     <?php endif; ?>
 </section>
 <?php endif; ?>
-<script src="js/sort-table.js"></script>
