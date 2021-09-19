@@ -29,7 +29,10 @@
 </section>
 <?php if (isset($report)): ?>
 <section class="mb-3 printarea">
-    <h2>Relatório do Projeto</h2>
+    <h2 class="d-inline-block">Relatório do Projeto</h2>
+    <a href="#" role="button" class="text-dark donotprint" onclick="window.print()"><svg class="icon">
+        <use xlink:href="img/icons.svg#report-print"></use>
+    </svg></a>
     <p class="mb-0"><Strong>Nome do Projeto: </Strong><?= $report->project->getName(); ?></p>
     <p class="mb-0"><Strong>Descrição: </Strong><?= $report->project->getDescription(); ?></p>
     <p class="mb-0"><Strong>Situação: </Strong><?= $report->project->getSituation(); ?></p>
@@ -48,7 +51,7 @@
     <p><Strong>Custo Total: </Strong>R$ <?= number_format($tempo * $report->hourlyRate / 60, 2, ",", ".") ?></p>
     <?php endif; ?>
     <?php if ($report->tasks): ?>
-    <h3>Tarefas Executadas</h3>
+    <h3 class="mt-3">Tarefas Executadas</h3>
     <div class="overflow-auto">
         <table class="d-table table table-striped" id="table">
             <thead>
@@ -62,8 +65,8 @@
                     <th scope="col" class="text-center">Duração</th>
                     <?php if ($tempo && $report->hourlyRate): ?>
                     <th scope="col" class="text-center">Custo</th>
-                    <?php endif; ?>
                     <th scope="col" id="donotprint-th">Fatura</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
@@ -78,15 +81,12 @@
                     <td class="align-middle text-center text-nowrap"><?= $task->getDiffTime(); ?> min</td>
                     <?php if ($tempo && $report->hourlyRate): ?>
                     <td class="align-middle text-center text-nowrap">R$ <?= number_format($task->getDiffTime() * $report->hourlyRate / 60, 2, ",", ".") ?></td>
-                    <?php endif; ?>
                     <td class="align-middle text-center text-nowrap donotprint">
-                        <a href="#" class="text-danger"><svg class="icon">
-                            <use xlink:href="img/icons.svg#report-pdf"></use>
-                        </svg></a>
-                        <a href="#" class="text-dark"><svg class="icon">
+                        <a href="/imprimir-tarefa?id=<?= $task->getId(); ?>&hourly_rate=<?= $report->hourlyRate; ?>" role="button" class="text-dark"><svg class="icon">
                             <use xlink:href="img/icons.svg#report-print"></use>
                         </svg></a>
                     </td>
+                    <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

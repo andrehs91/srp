@@ -100,7 +100,6 @@ body {
 }
 
 @media print {
-    @page {size: landscape}
     header,
     footer,
     .donotprint {
