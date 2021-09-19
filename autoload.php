@@ -1,5 +1,7 @@
 <?php
 
+require 'helpers.php';
+
 spl_autoload_register(
     function (string $namespace): void
     {

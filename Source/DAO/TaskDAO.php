@@ -102,40 +102,26 @@ class TaskDAO
         return $statement->execute();
     }
     
-    public function filter(array $parameters): ?array
+    public function filter(array $parameters, array $validKeys): ?array
     {
-        if (!$parameters['project'] &&
-            !$parameters['description'] &&
-            !$parameters['situation'] &&
-            !$parameters['notes']) {
-            return $this->readAll();
-        }
-        $addAnd = false;
+        $addAnd = 0;
         $query = 'SELECT * FROM tasks WHERE';
-        if ($parameters['project']) {
-            $query .= ' project_id LIKE :project_id';
-            $addAnd = true;
-        }
-        if ($parameters['situation']) {
-            if ($addAnd) $query .= " AND";
-            $query .= ' situation LIKE :situation';
-            $addAnd = true;
-        }
-        if ($parameters['description']) {
-            if ($addAnd) $query .= " AND";
-            $query .= ' description LIKE :description';
-            $addAnd = true;
-        }
-        if ($parameters['notes']) {
-            if ($addAnd) $query .= " AND";
-            $query .= ' notes LIKE :notes';
+        foreach ($parameters as $parameterKey => $parameterValue) {
+            if (in_array($parameterKey, $validKeys)) {
+                if ($addAnd > 0 && $addAnd < count($validKeys)) {
+                    $query .= " AND";
+                }
+                $query .= " $parameterKey LIKE :$parameterKey";
+                $addAnd++;
+            }
         }
         $query .= ';';
         $statement = $this->connection->prepare($query);
-        if ($parameters['project']) $statement->bindValue(':project_id', $parameters['project']);
-        if ($parameters['situation']) $statement->bindValue(':situation', $parameters['situation']);
-        if ($parameters['description']) $statement->bindValue(':description', "%" . $parameters['description'] . "%");
-        if ($parameters['notes']) $statement->bindValue(':notes', "%" . $parameters['notes'] . "%");
+        foreach ($parameters as $parameterKey => $parameterValue) {
+            if (in_array($parameterKey, $validKeys)) {
+                $statement->bindValue(":$parameterKey", "%" . $parameterValue . "%");
+            }
+        }
         $statement->execute();
         $tasksData = $statement->fetchAll();
         if (!count($tasksData)) return null;

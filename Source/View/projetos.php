@@ -31,6 +31,7 @@
         </div>
     </form>
 </section>
+<?php if (isset($projects)): ?>
 <section class="mb-3">
     <h2>Lista de Projetos</h2>
     <form method="GET" class="mt-3 text-start text-sm-end">
@@ -111,3 +112,4 @@
     </div>
 </section>
 <script src="js/sort-table.js"></script>
+<?php endif; ?>

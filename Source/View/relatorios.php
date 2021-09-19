@@ -35,6 +35,7 @@
     <p class="mb-0"><Strong>Custo em BRL: </Strong>R$ 0,00</p>
     <p class="mb-0"><Strong>Custo em USD: </Strong>$0.00</p>
     <p><Strong>Custo em EUR: </Strong>0,00 &#8364;</p>
+    <?php if (isset($report->tasks)): ?> // Corrigir
     <h3>Tarefas Executadas</h3>
     <div class="overflow-auto">
         <table class="d-table table table-striped" id="table">
@@ -73,6 +74,7 @@
             </tbody>
         </table>
     </div>
+    <?php endif; ?>
 </section>
 <?php endif; ?>
 <script src="js/sort-table.js"></script>

@@ -12,11 +12,6 @@ $route = $router->getRoute();
 try {
     require "../Source/Controller/$route.php";
 } catch (Throwable $throwable) {
-    echo "<pre><code>";                                                   // Remover em produção
-    echo "getFile: " . $throwable->getFile() . PHP_EOL;                   // Remover em produção
-    echo "getLine: " . $throwable->getLine() . PHP_EOL;                   // Remover em produção
-    echo "getMessage: " . $throwable->getMessage() . PHP_EOL;             // Remover em produção
-    echo "getTraceAsString: " . $throwable->getTraceAsString() . PHP_EOL; // Remover em produção
-    echo "</code></pre>";                                                 // Remover em produção
+    showThrowable($throwable); // Comentar em produção
     $router->redirect("404");
 }

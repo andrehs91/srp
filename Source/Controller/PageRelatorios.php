@@ -6,7 +6,7 @@ use \Model\Report;
 
 $projectDAO = new ProjectDAO($connection);
 
-if ($_GET['project-id']) {
+if (isset($_GET['project-id'])) {
     $taskDAO = new TaskDAO($connection);
     $report = new Report($projectDAO->read($_GET['project-id']), $taskDAO->filter(["project" => $_GET['project-id']]));
 }

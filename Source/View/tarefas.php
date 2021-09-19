@@ -11,18 +11,20 @@
             <div class="col-12 col-lg-6">
                 <div class="input-group">
                     <label class="input-group-text" for="project-id">Vinculada ao Projeto</label>
-                    <select class="form-select" name="project-id" id="project-id" required>
+                    <select class="form-select" name="project-id" id="project-id" <?= $projects ? "required" : "disabled" ; ?>>
                         <option selected></option>
+                        <?php if ($projects): ?>
                         <?php foreach ($projects as $projectId => $projectName): ?>
                         <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
                 <div class="input-group">
                     <label class="input-group-text" for="task-situation">Situação</label>
-                    <select class="form-select" name="task-situation" id="task-situation" required>
+                    <select class="form-select" name="task-situation" id="task-situation" <?= $projects ? "required" : "disabled" ; ?>>
                         <option selected></option>
                         <option value="Cancelada">Cancelada</option>
                         <option value="Concluída">Concluída</option>
@@ -38,48 +40,54 @@
             <div class="col-12 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-date">Data</label>
-                    <input type="date" class="form-control" name="task-date" id="task-date" value=<?= date('Y-m-d'); ?> required>
+                    <input type="date" class="form-control" name="task-date" id="task-date" value=<?= date('Y-m-d'); ?> <?= $projects ? "required" : "disabled" ; ?>>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-start-time">Hora do Início</label>
-                    <input type="time" class="form-control" name="task-start-time" id="task-start-time" value=<?= date('H:i'); ?> required>
+                    <input type="time" class="form-control" name="task-start-time" id="task-start-time" value=<?= date('H:i'); ?> <?= $projects ? "required" : "disabled" ; ?>>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-end-time">Hora do Fim</label>
-                    <input type="time" class="form-control" name="task-end-time" id="task-end-time" value=<?= date('H:i'); ?> required>
+                    <input type="time" class="form-control" name="task-end-time" id="task-end-time" value="<?= date('H:i'); ?>" <?= $projects ? "required" : "disabled" ; ?>>
                 </div>
             </div>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="task-description">Descrição</label>
-            <input type="text" class="form-control" name="task-description" id="task-description" required>
+            <input type="text" class="form-control" name="task-description" id="task-description" <?= $projects ? "required" : "disabled" ; ?>>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="task-notes">Observações</label>
-            <input type="text" class="form-control" name="task-notes" id="task-notes" placeholder="Opcional">
+            <input type="text" class="form-control" name="task-notes" id="task-notes" placeholder="Opcional" <?= $projects ? "" : "disabled" ; ?>>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-large btn-primary"<?= $projects ? "" : " disabled" ; ?>>Registrar</button>
+            
+            <?php if ($projects): ?>
+            <button type="submit" class="btn btn-large btn-primary">Registrar</button>
+            <?php else: ?>
+            <button type="submit" class="btn btn-large btn-secondary" disabled>Registrar</button>
+            <?php endif; ?>
         </div>
     </form>
 </section>
 <section class="mb-3">
     <h2>Tarefas Registradas</h2>
+    <?php if (isset($tasks) || isset($validKeys)): ?>
     <form method="GET" class="mt-3 text-start text-sm-end">
-        <div class="collapse <?= $_GET['project'] || $_GET['situation'] || $_GET['description'] || $_GET['notes'] ? "show" : "" ; ?>" id="inputs">
+        <div class="collapse <?= isset($validKeys) ? "show" : "" ; ?>" id="inputs">
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="row mb-sm-3">
-                        <label class="col-xl-2 col-md-3 col-sm-4 pe-sm-1 pt-0 pt-sm-2 col-form-label" for="project">Projeto:</label>
+                        <label class="col-xl-2 col-md-3 col-sm-4 pe-sm-1 pt-0 pt-sm-2 col-form-label" for="project_id">Projeto:</label>
                         <div class="col-xl-10 col-md-9 col-sm-8 ps-sm-1">
-                            <select class="form-select" name="project" id="project">
-                                <option <?= $_GET['project'] ? "" : "selected" ; ?>></option>
+                            <select class="form-select" name="project_id" id="project_id">
+                                <option></option>
                                 <?php foreach ($projects as $projectId => $projectName): ?>
-                                <option value="<?= $projectId; ?>" <?= isset($_GET['project']) && $_GET['project'] == $projectId ? "selected" : "" ; ?>><?= $projectName; ?></option>
+                                <option value="<?= $projectId; ?>" <?= isset($_GET['project_id']) && $_GET['project_id'] == $projectId ? "selected" : "" ; ?>><?= $projectName; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -90,7 +98,7 @@
                         <label class="col-xl-2 col-md-3 col-sm-4 pe-sm-1 col-form-label" for="situation">Situação:</label>
                         <div class="col-xl-10 col-md-9 col-sm-8 ps-sm-1">
                             <select class="form-select " name="situation" id="situation">
-                                <option <?= $_GET['situation'] ? "" : "selected" ; ?>></option>
+                                <option></option>
                                 <option value="Cancelada" <?= isset($_GET['situation']) && $_GET['situation'] == "Cancelada" ? "selected" : "" ; ?>>Cancelada</option>
                                 <option value="Concluída" <?= isset($_GET['situation']) && $_GET['situation'] == "Concluída" ? "selected" : "" ; ?>>Concluída</option>
                                 <option value="Em análise" <?= isset($_GET['situation']) && $_GET['situation'] == "Em análise" ? "selected" : "" ; ?>>Em análise</option>
@@ -122,11 +130,13 @@
             </div>
         </div>
         <div class="d-flex mb-2">
-            <a class="filter me-3 <?= $_GET['project'] || $_GET['situation'] || $_GET['description'] || $_GET['notes'] ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button" aria-expanded="false" aria-controls="inputs">Filtros disponíveis</a>
+            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button" aria-expanded="false" aria-controls="inputs">Filtros disponíveis</a>
             <hr class="d-inline-flex w-100">
-            <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/tarefas" role="button">Limpar</a></div>
+            <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/tarefas" role="button">Limpar</a></div> <!-- Se não houver algum campo preenchido mudar botão para abrir lista de filtros -->
         </div>
     </form>
+    <?php endif; ?>
+    <?php if (isset($tasks)): ?>
     <table class="d-none d-md-table table table-striped" id="table">
         <thead>
             <tr>
@@ -175,5 +185,8 @@
             </div>
         <?php endforeach; ?>
     </div>
+    <script src="js/sort-table.js"></script>
+    <?php else: ?>
+    <div class="alert alert-danger mt-3" role="alert">Nenhuma tarefa encontrada.</div>
+    <?php endif; ?>
 </section>
-<script src="js/sort-table.js"></script>
