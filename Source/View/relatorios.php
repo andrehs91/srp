@@ -11,9 +11,11 @@
                     <label class="input-group-text text-nowrap" for="project_id">Projeto: </label>
                     <select class="form-select" name="project_id" id="project_id" required>
                         <option selected></option>
+                        <?php if ($projects): ?>
                         <?php foreach ($projects as $projectId => $projectName): ?>
                         <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
                 <div class="col col-12 input-group">
