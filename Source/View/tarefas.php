@@ -14,8 +14,8 @@
                     <select class="form-select" name="project-id" id="project-id" <?= $projects ? "required" : "disabled" ; ?>>
                         <option selected></option>
                         <?php if ($projects): ?>
-                        <?php foreach ($projects as $project): ?>
-                        <option value="<?= $project->getId(); ?>"><?= $project->getName(); ?></option>
+                        <?php foreach ($projects as $projectId => $projectName): ?>
+                        <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
                         <?php endforeach; ?>
                         <?php endif; ?>
                     </select>
