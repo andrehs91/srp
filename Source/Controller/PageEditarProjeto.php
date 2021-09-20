@@ -4,7 +4,6 @@ use \DAO\ProjectDAO;
 use \Model\Project;
 
 $projectDAO = new ProjectDAO($connection);
-precode($_SERVER);
 $project = $projectDAO->read($_GET['id']);
 
 if (!$project) return $router->redirect("projeto-nao-encontrado");
