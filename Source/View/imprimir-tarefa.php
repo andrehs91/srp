@@ -28,6 +28,6 @@
         <a href="#" role="button" class="text-dark donotprint" onclick="window.print()"><svg class="icon"><use xlink:href="img/icons.svg#report-print"></use></svg></a>
     </div>
     <div class="text-center">
-        <a class="btn btn-large btn-dark mx-2 mt-3" href="/relatorios?project_id=<?= $_GET['project_id'] ?>&hourly_rate=<?= $_GET['hourly_rate']; ?>" role="button">Voltar</a>
+        <a class="btn btn-large btn-dark mx-2 mt-3 donotprint" href="/relatorios?project_id=<?= $_GET['project_id'] ?>&hourly_rate=<?= $_GET['hourly_rate']; ?>" role="button">Voltar</a>
     </div>
 </section>
