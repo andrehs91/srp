@@ -91,13 +91,13 @@ class ProjectDAO
         return $statement->execute();
     }
     
-    public function filter(array $parameters, array $validKeys): ?array
+    public function filter(array $parameters, array $validatedKeys): ?array
     {
         $addAnd = 0;
         $query = 'SELECT * FROM projects WHERE';
         foreach ($parameters as $parameterKey => $parameterValue) {
-            if (in_array($parameterKey, $validKeys)) {
-                if ($addAnd > 0 && $addAnd < count($validKeys)) {
+            if (in_array($parameterKey, $validatedKeys)) {
+                if ($addAnd > 0 && $addAnd < count($validatedKeys)) {
                     $query .= " AND";
                 }
                 $query .= " $parameterKey LIKE :$parameterKey";
@@ -107,7 +107,7 @@ class ProjectDAO
         $query .= ';';
         $statement = $this->connection->prepare($query);
         foreach ($parameters as $parameterKey => $parameterValue) {
-            if (in_array($parameterKey, $validKeys)) {
+            if (in_array($parameterKey, $validatedKeys)) {
                 $statement->bindValue(":$parameterKey", "%" . $parameterValue . "%");
             }
         }

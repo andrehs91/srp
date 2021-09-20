@@ -1,6 +1,6 @@
 <?php
 
-function keysValidate(array $get, array $possibleKeys) {
+function validateKeys(array $get, array $possibleKeys) {
     $validatedKeys = [];
     foreach ($get as $key => $value) {
         if (in_array($key, $possibleKeys) && $value !== "") $validatedKeys[] = $key;

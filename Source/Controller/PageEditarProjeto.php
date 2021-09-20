@@ -4,8 +4,8 @@ use \DAO\ProjectDAO;
 use \Model\Project;
 
 $projectDAO = new ProjectDAO($connection);
-$project = $projectDAO->read($_GET['id']);
-
+$project = null;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) $project = $projectDAO->read($_GET['id']);
 if (!$project) return $router->redirect("projeto-nao-encontrado");
 
 if (count($_POST)) {

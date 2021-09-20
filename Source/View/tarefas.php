@@ -14,8 +14,8 @@
                     <select class="form-select" name="project-id" id="project-id" <?= $projects ? "required" : "disabled" ; ?>>
                         <option selected></option>
                         <?php if ($projects): ?>
-                        <?php foreach ($projects as $projectId => $projectName): ?>
-                        <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
+                        <?php foreach ($projects as $project): ?>
+                        <option value="<?= $project->getId(); ?>"><?= $project->getName(); ?></option>
                         <?php endforeach; ?>
                         <?php endif; ?>
                     </select>
@@ -76,9 +76,9 @@
 </section>
 <section class="mb-3">
     <h2>Tarefas Registradas</h2>
-    <?php if (isset($tasks) || isset($validKeys)): ?>
+    <?php if (isset($tasks) || isset($validatedKeys)): ?>
     <form method="GET" class="mt-3 text-start text-sm-end">
-        <div class="collapse <?= isset($validKeys) ? "show" : "" ; ?>" id="inputs">
+        <div class="collapse <?= isset($validatedKeys) ? "show" : "" ; ?>" id="inputs">
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="row mb-sm-3">
@@ -130,7 +130,7 @@
             </div>
         </div>
         <div class="d-flex mb-2">
-            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
+            <a class="filter me-3 <?= isset($validatedKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
             <hr class="d-inline-flex w-100">
             <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/tarefas" role="button">Limpar</a></div>
         </div>

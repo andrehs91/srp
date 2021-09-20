@@ -5,8 +5,8 @@ use \Model\Task;
 use \DAO\ProjectDAO;
 
 $taskDAO = new TaskDAO($connection);
-$task = $taskDAO->read($_GET['id']);
-
+$task = null;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) $task = $taskDAO->read($_GET['id']);
 if (!$task) return $router->redirect("tarefa-nao-encontrada");
 
 if (count($_POST)) {

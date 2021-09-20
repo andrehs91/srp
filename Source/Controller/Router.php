@@ -2,8 +2,6 @@
 
 namespace Controller;
 
-use Throwable;
-
 class Router
 {
     private string $resource;

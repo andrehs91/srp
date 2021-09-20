@@ -16,8 +16,8 @@ if (count($_POST)) {
     $taskDAO->create($newTask);
     header('Location: /tarefas');
 } elseif (count($_GET)) {
-    $validKeys = keysValidate($_GET, ["project_id", "situation", "description", "notes"]);
-    if ($validKeys) $tasks = $taskDAO->filter($_GET, $validKeys);
+    $validatedKeys = validateKeys($_GET, ["project_id", "situation", "description", "notes"]);
+    if ($validatedKeys) $tasks = $taskDAO->filter($_GET, $validatedKeys);
     else $tasks = $taskDAO->readAll();
 } else {
     $tasks = $taskDAO->readAll();
@@ -25,13 +25,12 @@ if (count($_POST)) {
 
 $projectDAO = new ProjectDAO($connection);
 $projectsObjects = $projectDAO->readAll();
+$projects = null;
 if ($projectsObjects) {
     $projects = [];
     foreach ($projectsObjects as $projectObjects) {
         $projects[$projectObjects->getId()] = $projectObjects->getName();
     }
-} else {
-    $projects = null;
 }
 
 $title = "Tarefas";

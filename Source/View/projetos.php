@@ -33,9 +33,9 @@
 </section>
 <section class="mb-3">
     <h2>Lista de Projetos</h2>
-    <?php if (isset($projects) || isset($validKeys)): ?>
+    <?php if (isset($projects) || isset($validatedKeys)): ?>
     <form method="GET" class="mt-3 text-start text-sm-end">
-        <div class="collapse <?= isset($validKeys) ? "show" : "" ; ?>" id="inputs">
+        <div class="collapse <?= isset($validatedKeys) ? "show" : "" ; ?>" id="inputs">
             <div class="row mb-sm-3">
                 <label class="col-xl-2 col-md-3 col-sm-4 pe-sm-1 pt-0 pt-sm-2 col-form-label" for="situation">Situação:</label>
                 <div class="col-xl-10 col-md-9 col-sm-8 ps-sm-1">
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="d-flex mb-2">
-            <a class="filter me-3 <?= isset($validKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
+            <a class="filter me-3 <?= isset($validatedKeys) ? "": "collapsed" ; ?>" data-bs-toggle="collapse" href="#inputs" role="button">Filtros disponíveis</a>
             <hr class="d-inline-flex w-100">
             <div class="d-inline-flex"><button type="submit" class="btn btn-medium btn-outline-primary ms-3">Filtrar</button><a class="btn btn-medium btn-outline-secondary ms-3" href="/projetos" role="button">Limpar</a></div>
         </div>
