@@ -84,7 +84,7 @@
                     <?php if ($tempo && $report->hourlyRate): ?>
                     <td class="align-middle text-center text-nowrap">R$ <?= number_format($task->getDiffTime() * $report->hourlyRate / 60, 2, ",", ".") ?></td>
                     <td class="align-middle text-center text-nowrap donotprint">
-                        <a href="/imprimir-tarefa?id=<?= $task->getId(); ?>&hourly_rate=<?= $report->hourlyRate; ?>" role="button" class="text-dark"><svg class="icon">
+                        <a href="/imprimir-tarefa?project_id=<?= $_GET['project_id'] ?>&id=<?= $task->getId(); ?>&hourly_rate=<?= $report->hourlyRate; ?>" role="button" class="text-dark"><svg class="icon">
                             <use xlink:href="img/icons.svg#report-print"></use>
                         </svg></a>
                     </td>
