@@ -20,9 +20,13 @@ if (isset($_GET['project_id'])) {
 }
 
 $projectsObjects = $projectDAO->readAll();
-$projects = [];
-foreach ($projectsObjects as $projectObject) {
-    $projects[$projectObject->getId()] = $projectObject->getName();
+if ($projectsObjects) {
+    $projects = [];
+    foreach ($projectsObjects as $projectObjects) {
+        $projects[$projectObjects->getId()] = $projectObjects->getName();
+    }
+} else {
+    $projects = null;
 }
 
 $title = "Relatórios";

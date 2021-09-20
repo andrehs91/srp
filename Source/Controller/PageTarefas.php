@@ -25,9 +25,13 @@ if (count($_POST)) {
 
 $projectDAO = new ProjectDAO($connection);
 $projectsObjects = $projectDAO->readAll();
-$projects = [];
-foreach ($projectsObjects as $projectObjects) {
-    $projects[$projectObjects->getId()] = $projectObjects->getName();
+if ($projectsObjects) {
+    $projects = [];
+    foreach ($projectsObjects as $projectObjects) {
+        $projects[$projectObjects->getId()] = $projectObjects->getName();
+    }
+} else {
+    $projects = null;
 }
 
 $title = "Tarefas";
