@@ -12,6 +12,6 @@ $route = $router->getRoute();
 try {
     require "../Source/Controller/$route.php";
 } catch (Throwable $throwable) {
-    showThrowable($throwable); // Comentar em produção
+    // showThrowable($throwable);
     $router->redirect("404");
 }
