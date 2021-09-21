@@ -41,7 +41,7 @@
 </section>
 <section class="mb-3 text-center">
     <hr>
-    <small>Desenvolvido por <strong><a href="https://andrehenrique.tech">André Henrique</a></strong>.</small>
+    <small>Desenvolvido por <strong><a href="https://www.andrehenrique.tech">André Henrique</a></strong>.</small>
     <div>
         <a href="https://github.com/andrehs91" target="_blank" class="text-primary"><svg class="icon">
             <use xlink:href="img/icons.svg#icon-github"></use>

@@ -8,11 +8,11 @@
                     <label class="input-group-text" for="project-id">Vinculada ao Projeto</label>
                     <select class="form-select" name="project-id" id="project-id" required>
                         <option selected></option>
-                        <?php foreach ($projects as $projectId => $projectName): ?>
+                        <?php foreach ($projectList as $projectId => $projectName): ?>
                         <option value="<?= $projectId; ?>"<?= $projectId == $task->getProjectId() ? " selected" : "" ?>><?= $projectName; ?></option>
                         <?php endforeach; ?>
                     </select>
-                </div>
+                </div>  
             </div>
             <div class="col-12 col-lg-6">
                 <div class="input-group">

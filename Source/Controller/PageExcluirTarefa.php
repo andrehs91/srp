@@ -1,7 +1,6 @@
 <?php
 
 use \DAO\TaskDAO;
-use \Model\Task;
 use \DAO\ProjectDAO;
 
 $taskDAO = new TaskDAO($connection);
@@ -13,9 +12,6 @@ if (count($_POST)) {
     $taskDAO->delete($_POST['task-id']);
     header('Location: /tarefas');
 }
-
-$projectDAO = new ProjectDAO($connection);
-$project = $projectDAO->read($task->getProjectId());
 
 $title = "Excluir Tarefa";
 require "ViewLoader.php";

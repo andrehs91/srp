@@ -41,8 +41,8 @@
     <p class="mb-0"><Strong>Observações: </Strong><?= $report->project->getNotes(); ?></p>
     <p class="mb-0"><Strong>Quantidade de tarefas: </Strong><?= $report->tasks ? count($report->tasks) : "0" ; ?></p>
     <?php
+        $tempo = 0;
         if ($report->tasks) {
-            $tempo = 0;
             foreach ($report->tasks as $task) {
                 $tempo += $task->getDiffTime();
             }

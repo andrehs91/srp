@@ -1,7 +1,7 @@
 <h1 class="text-center mb-3">Tarefas</h1>
 <section class="mb-3">
     <h2>Registrar Tarefa</h2>
-    <?php if (!$projects): ?>
+    <?php if (!$projectList): ?>
     <div class="alert alert-danger" role="alert">
         <strong>Atenção:</strong> Antes de registrar uma tarefa é necessário criar um projeto para sua vinculação. <a class="link-danger" href="/projetos">Clique aqui</a> para criar um projeto.
     </div>
@@ -11,10 +11,10 @@
             <div class="col-12 col-lg-6">
                 <div class="input-group">
                     <label class="input-group-text" for="project-id">Vinculada ao Projeto</label>
-                    <select class="form-select" name="project-id" id="project-id" <?= $projects ? "required" : "disabled" ; ?>>
+                    <select class="form-select" name="project-id" id="project-id" <?= $projectList ? "required" : "disabled" ; ?>>
                         <option selected></option>
-                        <?php if ($projects): ?>
-                        <?php foreach ($projects as $projectId => $projectName): ?>
+                        <?php if ($projectList): ?>
+                        <?php foreach ($projectList as $projectId => $projectName): ?>
                         <option value="<?= $projectId; ?>"><?= $projectName; ?></option>
                         <?php endforeach; ?>
                         <?php endif; ?>
@@ -24,7 +24,7 @@
             <div class="col-12 col-lg-6">
                 <div class="input-group">
                     <label class="input-group-text" for="task-situation">Situação</label>
-                    <select class="form-select" name="task-situation" id="task-situation" <?= $projects ? "required" : "disabled" ; ?>>
+                    <select class="form-select" name="task-situation" id="task-situation" <?= $projectList ? "required" : "disabled" ; ?>>
                         <option selected></option>
                         <option value="Cancelada">Cancelada</option>
                         <option value="Concluída">Concluída</option>
@@ -40,33 +40,32 @@
             <div class="col-12 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-date">Data</label>
-                    <input type="date" class="form-control" name="task-date" id="task-date" value=<?= date('Y-m-d'); ?> <?= $projects ? "required" : "disabled" ; ?>>
+                    <input type="date" class="form-control" name="task-date" id="task-date" value=<?= date('Y-m-d'); ?> <?= $projectList ? "required" : "disabled" ; ?>>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-start-time">Hora do Início</label>
-                    <input type="time" class="form-control" name="task-start-time" id="task-start-time" value=<?= date('H:i'); ?> <?= $projects ? "required" : "disabled" ; ?>>
+                    <input type="time" class="form-control" name="task-start-time" id="task-start-time" value=<?= date('H:i'); ?> <?= $projectList ? "required" : "disabled" ; ?>>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="input-group">
                     <label class="input-group-text" for="task-end-time">Hora do Fim</label>
-                    <input type="time" class="form-control" name="task-end-time" id="task-end-time" value="<?= date('H:i'); ?>" <?= $projects ? "required" : "disabled" ; ?>>
+                    <input type="time" class="form-control" name="task-end-time" id="task-end-time" value="<?= date('H:i'); ?>" <?= $projectList ? "required" : "disabled" ; ?>>
                 </div>
             </div>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="task-description">Descrição</label>
-            <input type="text" class="form-control" name="task-description" id="task-description" <?= $projects ? "required" : "disabled" ; ?>>
+            <input type="text" class="form-control" name="task-description" id="task-description" <?= $projectList ? "required" : "disabled" ; ?>>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="task-notes">Observações</label>
-            <input type="text" class="form-control" name="task-notes" id="task-notes" placeholder="Opcional" <?= $projects ? "" : "disabled" ; ?>>
+            <input type="text" class="form-control" name="task-notes" id="task-notes" placeholder="Opcional" <?= $projectList ? "" : "disabled" ; ?>>
         </div>
         <div class="text-center">
-            
-            <?php if ($projects): ?>
+            <?php if ($projectList): ?>
             <button type="submit" class="btn btn-large btn-primary">Registrar</button>
             <?php else: ?>
             <button type="submit" class="btn btn-large btn-secondary" disabled>Registrar</button>
@@ -86,7 +85,7 @@
                         <div class="col-xl-10 col-md-9 col-sm-8 ps-sm-1">
                             <select class="form-select" name="project_id" id="project_id">
                                 <option></option>
-                                <?php foreach ($projects as $projectId => $projectName): ?>
+                                <?php foreach ($projectList as $projectId => $projectName): ?>
                                 <option value="<?= $projectId; ?>" <?= isset($_GET['project_id']) && $_GET['project_id'] == $projectId ? "selected" : "" ; ?>><?= $projectName; ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -151,7 +150,7 @@
         <tbody>
             <?php foreach ($tasks as $task): ?>
             <tr>
-                <td class="align-middle"><?= $projects[$task->getProjectId()]; ?></td>
+                <td class="align-middle"><?= $task->getProjectName(); ?></td>
                 <td class="align-middle"><?= $task->getDescription(); ?></td>
                 <td class="align-middle"><?= $task->getSituation(); ?></td>
                 <td class="align-middle"><?= $task->getNotes(); ?></td>
@@ -168,7 +167,7 @@
             <div class="col p-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h5 class="card-title"><?= $projects[$task->getProjectId()]; ?></h5>
+                        <h5 class="card-title"><?= $task->getProjectName(); ?></h5>
                     </div>
                     <div class="card-body">
                         <p class="card-text py-0">

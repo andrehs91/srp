@@ -3,7 +3,7 @@
     <p class="mb-0">
         <div class="row g-1">
             <div class="col col-3 border-top border-bottom text-end"><strong>Vinculada ao Projeto: </strong></div>
-            <div class="col col-9 border-top border-bottom"><?= $project->getName(); ?></div>
+            <div class="col col-9 border-top border-bottom"><?= $task->getProjectName(); ?></div>
             <div class="col col-3 border-bottom text-end"><strong>Descrição: </strong></div>
             <div class="col col-9 border-bottom"><?= $task->getDescription(); ?></div>
             <div class="col col-3 border-bottom text-end"><strong>Situação: </strong></div>
@@ -17,7 +17,7 @@
             <div class="col col-3 border-bottom text-end"><strong>Hora do Fim: </strong></div>
             <div class="col col-9 border-bottom"><?= $task->getEndTime(); ?></div>
             <div class="col col-3 border-bottom text-end"><strong>Duração: </strong></div>
-            <div class="col col-9 border-bottom"><?= $task->getDiffTime(); ?></div>
+            <div class="col col-9 border-bottom"><?= $task->getDiffTime(); ?> min</div>
             <?php if($hourlyRate): ?>
             <div class="col col-3 border-bottom text-end"><strong>Custo: </strong></div>
             <div class="col col-9 border-bottom">R$ <?= number_format($task->getDiffTime() * $hourlyRate / 60, 2, ",", ".") ?></div>

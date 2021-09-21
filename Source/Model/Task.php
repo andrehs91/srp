@@ -9,6 +9,7 @@ class Task
 {
     private ?int $id;
     private int $projectId;
+    private string $projectName;
     private string $situation;
     private DateTimeInterface $start;
     private DateTimeInterface $end;
@@ -17,6 +18,7 @@ class Task
     
     public function __construct(int $id = null,
                                 int $projectId,
+                                string $projectName,
                                 string $situation,
                                 string $date,      // "Y-m-d"
                                 string $startTime, // "H:i"
@@ -26,6 +28,7 @@ class Task
     {
         $this->id = $id;
         $this->projectId = $projectId;
+        $this->projectName = $projectName;
         $this->situation = strip_tags($situation);
         $this->setStart($date, $startTime);
         $this->setEnd($date, $endTime);
@@ -41,6 +44,11 @@ class Task
     public function getProjectId(): int
     {
         return $this->projectId;
+    }
+    
+    public function getProjectName(): string
+    {
+        return $this->projectName;
     }
     
     public function getSituation(): string

@@ -18,6 +18,7 @@ class TaskDAO
     {
         return new Task(id: $taskData['id'],
                         projectId: $taskData['project_id'],
+                        projectName: $taskData['project_name'],
                         situation: $taskData['situation'],
                         date: $taskData['date'],
                         startTime: $taskData['start_time'],
@@ -54,7 +55,7 @@ class TaskDAO
     
     public function read(int $id): ?Task
     {
-        $query = 'SELECT * FROM tasks WHERE id = :id;';
+        $query = 'SELECT * FROM (SELECT tasks.*, projects.name AS project_name FROM tasks INNER JOIN projects ON tasks.project_id = projects.id) WHERE id = :id;'; // Criar VIEW
         $statement = $this->connection->prepare($query);
         $statement->bindValue(':id', $id);
         $statement->execute();
@@ -65,7 +66,8 @@ class TaskDAO
     
     public function readAll(): ?array
     {
-        $result = $this->connection->query('SELECT * FROM tasks;');
+        $query = 'SELECT tasks.*, projects.name AS project_name FROM tasks INNER JOIN projects ON tasks.project_id = projects.id;';
+        $result = $this->connection->query($query);
         $tasks = $result->fetchAll();
         if (!count($tasks)) return null;
         return $this->newTasks($tasks);
@@ -105,7 +107,7 @@ class TaskDAO
     public function filter(array $parameters, array $validatedKeys): ?array
     {
         $addAnd = 0;
-        $query = 'SELECT * FROM tasks WHERE';
+        $query = 'SELECT * FROM (SELECT tasks.*, projects.name AS project_name FROM tasks INNER JOIN projects ON tasks.project_id = projects.id) WHERE';
         foreach ($parameters as $parameterKey => $parameterValue) {
             if (in_array($parameterKey, $validatedKeys)) {
                 if ($addAnd > 0 && $addAnd < count($validatedKeys)) {

@@ -90,6 +90,17 @@ class ProjectDAO
         $statement->bindValue(':id', $id);
         return $statement->execute();
     }
+
+    public function projectList(): ?array{
+        $projects = $this->readAll();
+        $projectList = null;
+        if ($projects) {
+            foreach ($projects as $project) {
+                $projectList[$project->getId()] = $project->getName();
+            }
+        }
+        return $projectList;
+    }
     
     public function filter(array $parameters, array $validatedKeys): ?array
     {

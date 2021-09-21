@@ -6,7 +6,7 @@
             <div class="col-12 col-lg-6">
                 <div class="input-group">
                     <label class="input-group-text" for="project-id">Vinculada ao Projeto</label>
-                    <input type="text" class="form-control" id="project-id" value="<?= $project->getName(); ?>" disabled>
+                    <input type="text" class="form-control" id="project-id" value="<?= $task->getProjectName(); ?>" disabled>
                 </div>
             </div>
             <div class="col-12 col-lg-6">
