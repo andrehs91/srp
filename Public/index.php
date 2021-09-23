@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);         // Comentar em produção
-ini_set('display_startup_errors', 1); // Comentar em produção
-error_reporting(E_ALL);               // Comentar em produção
+// ini_set('display_errors', 1);         // Comentar em produção
+// ini_set('display_startup_errors', 1); // Comentar em produção
+// error_reporting(E_ALL);               // Comentar em produção
 
 require_once "../autoload.php";
 
@@ -16,6 +16,6 @@ $connection = MySQLConnection::createConnection();
 try {
     require "../Source/Controller/$route.php";
 } catch (Throwable $throwable) {
-    showThrowable($throwable); // Comentar em produção
+    // showThrowable($throwable); // Comentar em produção
     $router->redirect("404");
 }
