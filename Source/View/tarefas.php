@@ -171,7 +171,7 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text py-0">
-                            <strong>Descrição: </strong><?= $task->getDescription(); ?>
+                            <strong>Descrição: </strong><?= $task->getDescription(); ?><br>
                             <strong>Situação: </strong><?= $task->getSituation(); ?><br>
                             <strong>Observações: </strong><?= $task->getNotes(); ?><br>
                             <strong>Data: </strong><?= $task->getDate("d/m/Y"); ?><br>
