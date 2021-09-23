@@ -2,8 +2,9 @@
 <section class="mb-3">
     <p class="mb-0">
         <div class="row g-1">
-            <div class="col col-3 border-top border-bottom text-end"><strong>Vinculada ao Projeto: </strong></div>
-            <div class="col col-9 border-top border-bottom"><?= $task->getProjectName(); ?></div>
+            <div class="col col-12 border-bottom text-end" colspan="2"></div>
+            <div class="col col-3 border-bottom text-end"><strong>Vinculada ao Projeto: </strong></div>
+            <div class="col col-9 border-bottom"><?= $task->getProjectName(); ?></div>
             <div class="col col-3 border-bottom text-end"><strong>Descrição: </strong></div>
             <div class="col col-9 border-bottom"><?= $task->getDescription(); ?></div>
             <div class="col col-3 border-bottom text-end"><strong>Situação: </strong></div>

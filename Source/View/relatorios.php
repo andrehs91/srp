@@ -48,7 +48,7 @@
             }
         }
     ?>
-    <p class="mb-0"><Strong>Tempo despendido: </Strong><?= $tempo ?? "0" ; ?> min</p>
+    <p class="mb-0"><Strong>Tempo despendido: </Strong><?= $tempo ?? "0" ; ?> min (<?= $tempo ? intval($tempo/60) : "0" ; ?> horas e <?= $tempo ? $tempo%60 : "0" ; ?> minutos)</p>
     <?php if ($tempo && $report->hourlyRate): ?>
     <p><Strong>Custo Total: </Strong>R$ <?= number_format($tempo * $report->hourlyRate / 60, 2, ",", ".") ?></p>
     <?php endif; ?>

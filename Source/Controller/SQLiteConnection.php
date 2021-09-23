@@ -12,7 +12,6 @@ class SQLiteConnection
         $connection = new PDO('sqlite:' . $path . 'db.sqlite');
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        // Remover em produção
         $connection->exec('
             PRAGMA foreign_keys = ON;
             CREATE TABLE IF NOT EXISTS projects (
@@ -22,6 +21,7 @@ class SQLiteConnection
                 situation   TEXT,
                 notes       TEXT
             );
+
             CREATE TABLE IF NOT EXISTS tasks (
                 id          INTEGER PRIMARY KEY,
                 date        TEXT,
@@ -33,6 +33,11 @@ class SQLiteConnection
                 project_id  INTEGER,
                 FOREIGN KEY(project_id) REFERENCES projects(id)
             );
+
+            CREATE VIEW IF NOT EXISTS tasks_with_projectname AS
+            SELECT tasks.*, projects.name AS project_name
+            FROM tasks INNER JOIN projects ON tasks.project_id = projects.id;
+
             CREATE TRIGGER IF NOT EXISTS insert_projects_tasks
             BEFORE INSERT ON tasks
                 FOR EACH ROW BEGIN
@@ -41,6 +46,7 @@ class SQLiteConnection
                         THEN RAISE (ABORT, \'INSERT on table "tasks" violates foreign key\')
                     END;
                 END;
+
             CREATE TRIGGER IF NOT EXISTS update_projects_tasks
             BEFORE UPDATE ON tasks
                 FOR EACH ROW BEGIN
@@ -49,13 +55,13 @@ class SQLiteConnection
                         THEN RAISE(ABORT, \'UPDATE on table "tasks" violates foreign key\')
                     END;
                 END;
+
             CREATE TRIGGER IF NOT EXISTS delete_projects_tasks
             BEFORE DELETE ON projects
                 FOR EACH ROW BEGIN
                     DELETE FROM tasks WHERE project_id = OLD.id;
                 END;
         ');
-        
         return $connection;
     }
 }
