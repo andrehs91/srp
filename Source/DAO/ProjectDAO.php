@@ -4,7 +4,6 @@ namespace DAO;
 
 use PDO;
 use \Model\Project;
-use Exception;
 
 class ProjectDAO
 {
@@ -68,8 +67,8 @@ class ProjectDAO
     
     public function update(Project $project): bool
     {
-        $query = '  UPDATE projects SET
-                        name = :name,
+        $query = '  UPDATE projects
+                    SET name = :name,
                         description = :description,
                         situation = :situation,
                         notes = :notes

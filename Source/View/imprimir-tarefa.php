@@ -32,3 +32,6 @@
         <a class="btn btn-large btn-dark mx-2 mt-3 donotprint" href="/relatorios?project_id=<?= $_GET['project_id'] ?>&hourly_rate=<?= $_GET['hourly_rate']; ?>" role="button">Voltar</a>
     </div>
 </section>
+<script>
+    window.onload(window.print());
+</script>
