@@ -32,9 +32,7 @@
 <?php if (isset($report)): ?>
 <section class="mb-3 printarea">
     <h2 class="d-inline-block">Relatório do Projeto</h2>
-    <a href="#" role="button" class="text-dark donotprint" onclick="window.print()"><svg class="icon">
-        <use xlink:href="img/icons.svg#report-print"></use>
-    </svg></a>
+    <a href="#" role="button" class="ms-2 text-dark donotprint" onclick="window.print()"><svg class="icon"><use xlink:href="img/icons.svg#report-print"></use></svg></a>
     <p class="mb-0"><Strong>Nome do Projeto: </Strong><?= $report->project->getName(); ?></p>
     <p class="mb-0"><Strong>Descrição: </Strong><?= $report->project->getDescription(); ?></p>
     <p class="mb-0"><Strong>Situação: </Strong><?= $report->project->getSituation(); ?></p>
@@ -84,9 +82,7 @@
                     <?php if ($tempo && $report->hourlyRate): ?>
                     <td class="align-middle text-center text-nowrap">R$ <?= number_format($task->getDiffTime() * $report->hourlyRate / 60, 2, ",", ".") ?></td>
                     <td class="align-middle text-center text-nowrap donotprint">
-                        <a href="/imprimir-tarefa?project_id=<?= $_GET['project_id'] ?>&id=<?= $task->getId(); ?>&hourly_rate=<?= $report->hourlyRate; ?>" role="button" class="text-dark"><svg class="icon">
-                            <use xlink:href="img/icons.svg#report-print"></use>
-                        </svg></a>
+                        <a href="/imprimir-tarefa?id=<?= $task->getId(); ?>&hourly_rate=<?= $report->hourlyRate; ?>" role="button" class="text-dark"><svg class="icon"><use xlink:href="img/icons.svg#report-print"></use></svg></a>
                     </td>
                     <?php endif; ?>
                 </tr>
